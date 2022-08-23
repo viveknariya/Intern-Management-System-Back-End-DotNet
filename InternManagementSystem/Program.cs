@@ -21,6 +21,11 @@ namespace InternManagementSystem
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                })
+                .ConfigureLogging(b =>
+                {
+                    b.AddLog4Net(@"C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\InternManagementSystem\log4net.config");
                 });
+           
     }
 }

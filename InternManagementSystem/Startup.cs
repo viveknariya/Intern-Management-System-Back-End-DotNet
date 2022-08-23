@@ -26,6 +26,8 @@ namespace InternManagementSystem
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddSwaggerGen(d => d.SwaggerDoc("vivek", new Microsoft.OpenApi.Models.OpenApiInfo()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,6 +37,10 @@ namespace InternManagementSystem
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/vivek/swagger.json", "Vivek"));
 
             app.UseHttpsRedirection();
 
