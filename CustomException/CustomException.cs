@@ -39,4 +39,14 @@ namespace CustomException
     {
         public LeaveNotFound(string message) : base(message) { }
     }
+
+    public class WorkingDataAlreadyExists : Exception
+    {
+        public WorkingDataAlreadyExists(string message) : base(message) { }
+    }
+
+    public class WorkingDataNotFound : Exception
+    {
+        public WorkingDataNotFound(string message) : base(message) { }
+    }
 }

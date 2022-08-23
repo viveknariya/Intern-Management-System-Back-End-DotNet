@@ -1,4 +1,5 @@
-﻿using InternManagementSystem.Models;
+﻿using CustomException;
+using InternManagementSystem.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -27,41 +28,103 @@ namespace InternManagementSystem.Controllers
 
         [HttpGet]
         public IActionResult workingHourData()
+            
         {
+
+            _logger.LogInformation("WorkingHour Data Excuted");
             return Ok(_context.WorkingHour);
         }
 
         [HttpPost]
         public IActionResult AddRecord(WorkingHour wh)
         {
-            _context.WorkingHour.Add(wh);
-            _context.SaveChanges();
+            _logger.LogInformation(wh.InternId);
+            try
+            {
+                var temp = _context.WorkingHour.FirstOrDefault(w => w.InternId == wh.InternId && w.Monthly == wh.Monthly);
+                if(temp == null)
+                {
+                    _context.WorkingHour.Add(wh);
+                    _context.SaveChanges();
 
-            return Ok(wh);
+                    _logger.LogInformation("Working Data Added Successfully");
+                    return Ok(wh);
+                }
+                else
+                {
+                    throw new WorkingDataAlreadyExists("Working Data Already Exists");
+                }
+
+            }
+            catch (WorkingDataAlreadyExists er)
+            {
+                _logger.LogError("httppost data already exists");
+                return BadRequest(er.Message);
+            }
+            
         }
 
         [HttpDelete]
-        public IActionResult DeleteRecord(string id)
+        public IActionResult DeleteRecord(WorkingHour workinghour)
         {
-            var wh = _context.WorkingHour.FirstOrDefault(w => w.InternId == id);
-            _context.WorkingHour.Remove(wh);
-            _context.SaveChanges();
+            _logger.LogInformation(workinghour.InternId);
+            try
+            {
+                var wh = _context.WorkingHour.FirstOrDefault(w => w.Whid == workinghour.Whid);
+                if(wh != null)
+                {
+                    _context.WorkingHour.Remove(wh);
+                    _context.SaveChanges();
 
-            return Ok(wh);
+                    _logger.LogInformation("Working Data Deleted Successfully");
+                    return Ok(wh);
+                }
+                else
+                {
+                    throw new WorkingDataNotFound("Working Data Not Found");
+                }
+            }
+            catch (WorkingDataNotFound er)
+            {
+                _logger.LogError("httpdelete working data not found");
+                return BadRequest(er.Message);
+            }
+            
+            
         }
+
 
         [HttpPut]
 
         public IActionResult PutRecord(WorkingHour wh)
         {
-            var workingHour = _context.WorkingHour.FirstOrDefault(w => w.InternId == wh.InternId);
-            workingHour.CompanyWorkingHour = wh.CompanyWorkingHour;
-            workingHour.InternWorkingHour = wh.InternWorkingHour;
+            _logger.LogInformation(wh.InternId);
+            try
+            {
+                var workingHour = _context.WorkingHour.FirstOrDefault(w => w.Whid == wh.Whid);
+                if(workingHour != null)
+                {
+                    workingHour.CompanyWorkingHour = wh.CompanyWorkingHour;
+                    workingHour.InternWorkingHour = wh.InternWorkingHour;
 
-            _context.WorkingHour.Update(workingHour);
-            _context.SaveChanges();
+                    _context.WorkingHour.Update(workingHour);
+                    _context.SaveChanges();
 
-            return Ok(workingHour);
+                    _logger.LogInformation("Working Data Record Changed Successfully");
+                    return Ok(workingHour);
+                }
+                else
+                {
+                    throw new WorkingDataNotFound("Working Data Not Found");
+                }
+            }
+            catch(WorkingDataNotFound er)
+            {
+                _logger.LogError("httpput working data not found");
+                return BadRequest(er.Message);
+            }
+            
+            
 
         }
     }
