@@ -1,0 +1,9 @@
+C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\CustomException\bin\Debug\netcoreapp3.1\CustomException.deps.json
+C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\CustomException\bin\Debug\netcoreapp3.1\CustomException.dll
+C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\CustomException\bin\Debug\netcoreapp3.1\CustomException.pdb
+C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\CustomException\obj\Debug\netcoreapp3.1\CustomException.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\CustomException\obj\Debug\netcoreapp3.1\CustomException.AssemblyInfoInputs.cache
+C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\CustomException\obj\Debug\netcoreapp3.1\CustomException.AssemblyInfo.cs
+C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\CustomException\obj\Debug\netcoreapp3.1\CustomException.csproj.CoreCompileInputs.cache
+C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\CustomException\obj\Debug\netcoreapp3.1\CustomException.dll
+C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\CustomException\obj\Debug\netcoreapp3.1\CustomException.pdb

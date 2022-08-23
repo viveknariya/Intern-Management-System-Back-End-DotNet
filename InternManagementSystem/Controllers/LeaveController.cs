@@ -47,6 +47,9 @@ namespace InternManagementSystem.Controllers
             var L = _context.Leave.FirstOrDefault(l => l.InternId == leave.InternId);
             L.LeaveDate = leave.LeaveDate;
             L.Reason = leave.Reason;
+
+            _context.Leave.Update(L);
+            _context.SaveChanges();
  
             return Ok(L);
 

@@ -1379,6 +1379,16 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
+      },
+      "CustomException/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/CustomException.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CustomException.dll": {}
+        }
       }
     }
   },
@@ -5459,10 +5469,16 @@
         "system.xml.xmlserializer.4.3.0.nupkg.sha512",
         "system.xml.xmlserializer.nuspec"
       ]
+    },
+    "CustomException/1.0.0": {
+      "type": "project",
+      "path": "../CustomException/CustomException.csproj",
+      "msbuildProject": "../CustomException/CustomException.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "CustomException >= 1.0.0",
       "Microsoft.EntityFrameworkCore.SqlServer >= 3.1.0",
       "Microsoft.EntityFrameworkCore.Tools >= 3.1.0",
       "Microsoft.Extensions.Logging.Log4Net.AspNetCore >= 6.1.0",
@@ -5495,7 +5511,11 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\mindc1jun155\\Desktop\\Final\\InternManagementSystem\\CustomException\\CustomException.csproj": {
+              "projectPath": "C:\\Users\\mindc1jun155\\Desktop\\Final\\InternManagementSystem\\CustomException\\CustomException.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

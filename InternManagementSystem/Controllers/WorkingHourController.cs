@@ -48,6 +48,9 @@ namespace InternManagementSystem.Controllers
             workingHour.CompanyWorkingHour = wh.CompanyWorkingHour;
             workingHour.InternWorkingHour = wh.InternWorkingHour;
 
+            _context.WorkingHour.Update(workingHour);
+            _context.SaveChanges();
+
             return Ok(workingHour);
 
         }

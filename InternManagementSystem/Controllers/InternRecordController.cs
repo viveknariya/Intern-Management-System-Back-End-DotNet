@@ -1,4 +1,5 @@
-﻿using InternManagementSystem.Models;
+﻿using CustomException;
+using InternManagementSystem.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -18,12 +19,34 @@ namespace InternManagementSystem.Controllers
         [HttpPost("login")]
         public IActionResult Login(Login login)
         {
-            var user = _context.InternRecord.FirstOrDefault(u => u.InternId == login.UserName && u.InternPassword == login.Password);
-            if(user != null)
+            try
             {
-                return Ok();
+                var user = _context.InternRecord.FirstOrDefault(u => u.InternId == login.UserName);
+                if (user != null)
+                {
+                    if (user.InternPassword == login.Password)
+                    {
+                        return Ok("Login Successfull");
+                    }
+                    else
+                    {
+                        throw new IncorrectPassword("IncorrectPassword");
+                    }
+
+                }
+                else
+                {
+                    throw new UserNameNotFound("UserName Not Found");
+                }
             }
-            return BadRequest();
+            catch(UserNameNotFound e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch(IncorrectPassword e)
+            {
+                return BadRequest(e.Message);
+            }
             
         }
 
