@@ -12,6 +12,7 @@ namespace InternManagementSystem.Models
         }
 
         public string InternId { get; set; }
+        public string InternPassword { get; set; }
         public string InternName { get; set; }
         public string PhoneNumber { get; set; }
         public string EmailId { get; set; }

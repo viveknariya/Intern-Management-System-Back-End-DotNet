@@ -34,7 +34,7 @@ namespace InternManagementSystem.Models
             modelBuilder.Entity<Designation>(entity =>
             {
                 entity.HasKey(e => e.DesignationName)
-                    .HasName("PK__Designat__372CDC220D766B2C");
+                    .HasName("PK__Designat__372CDC2244152362");
 
                 entity.Property(e => e.DesignationName).HasMaxLength(50);
 
@@ -50,7 +50,7 @@ namespace InternManagementSystem.Models
             modelBuilder.Entity<InternRecord>(entity =>
             {
                 entity.HasKey(e => e.InternId)
-                    .HasName("PK__InternRe__6910EDE2994E99BC");
+                    .HasName("PK__InternRe__6910EDE26420010D");
 
                 entity.Property(e => e.InternId).HasMaxLength(50);
 
@@ -62,6 +62,10 @@ namespace InternManagementSystem.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
+                entity.Property(e => e.InternPassword)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
                 entity.Property(e => e.InternStatus).HasMaxLength(50);
 
                 entity.Property(e => e.PhoneNumber).HasMaxLength(10);
@@ -69,7 +73,7 @@ namespace InternManagementSystem.Models
                 entity.HasOne(d => d.DesignationNavigation)
                     .WithMany(p => p.InternRecord)
                     .HasForeignKey(d => d.Designation)
-                    .HasConstraintName("FK__InternRec__Desig__398D8EEE");
+                    .HasConstraintName("FK__InternRec__Desig__49C3F6B7");
             });
 
             modelBuilder.Entity<Leave>(entity =>
@@ -84,13 +88,13 @@ namespace InternManagementSystem.Models
                     .WithMany(p => p.Leave)
                     .HasForeignKey(d => d.InternId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Leave__InternId__4316F928");
+                    .HasConstraintName("FK__Leave__InternId__4F7CD00D");
             });
 
             modelBuilder.Entity<WorkingHour>(entity =>
             {
                 entity.HasKey(e => e.Whid)
-                    .HasName("PK__WorkingH__831244614E643708");
+                    .HasName("PK__WorkingH__83124461BCD15E0B");
 
                 entity.Property(e => e.Whid).HasColumnName("WHId");
 
@@ -114,7 +118,7 @@ namespace InternManagementSystem.Models
                     .WithMany(p => p.WorkingHour)
                     .HasForeignKey(d => d.InternId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__WorkingHo__Inter__403A8C7D");
+                    .HasConstraintName("FK__WorkingHo__Inter__4CA06362");
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -15,6 +15,18 @@ namespace InternManagementSystem.Controllers
     {
         private readonly InternContext _context = new InternContext();
 
+        [HttpPost("login")]
+        public IActionResult Login(Login login)
+        {
+            var user = _context.InternRecord.FirstOrDefault(u => u.InternId == login.UserName && u.InternPassword == login.Password);
+            if(user != null)
+            {
+                return Ok();
+            }
+            return BadRequest();
+            
+        }
+
         [HttpGet]
         public IActionResult InternList()
         {
