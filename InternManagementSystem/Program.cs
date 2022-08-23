@@ -22,9 +22,9 @@ namespace InternManagementSystem
                 {
                     webBuilder.UseStartup<Startup>();
                 })
-                .ConfigureLogging(b =>
+                .ConfigureLogging(builder =>
                 {
-                    b.AddLog4Net(@"C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\InternManagementSystem\log4net.config");
+                    builder.AddLog4Net(@"C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\InternManagementSystem\log4net.config");
                 });
            
     }

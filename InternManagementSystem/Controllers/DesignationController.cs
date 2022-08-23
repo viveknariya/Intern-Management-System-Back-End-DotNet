@@ -1,6 +1,8 @@
-﻿using InternManagementSystem.Models;
+﻿using CustomException;
+using InternManagementSystem.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,44 +16,110 @@ namespace InternManagementSystem.Controllers
     {
         private readonly InternContext _context = new InternContext();
 
+        private readonly ILogger<DesignationController> _logger;
+
+
+        public DesignationController(ILogger<DesignationController> logger)
+        {
+            _logger = logger;
+        }
+
 
         [HttpGet]
         public IActionResult DesignationList()
         {
+            _logger.LogInformation("Designation List Excuted");
             return Ok(_context.Designation);
         }
 
         [HttpPost]
         public IActionResult AddRecord(Designation designation)
         {
-            _context.Designation.Add(designation);
-            _context.SaveChanges();
+            _logger.LogInformation(designation.DepartmentName);
 
-            return Ok(designation);
+            try
+            {
+                var desi = _context.Designation.FirstOrDefault(d => d.DesignationName == designation.DesignationName);
+                if(desi == null)
+                {
+                    _context.Designation.Add(designation);
+                    _context.SaveChanges();
+
+                    _logger.LogInformation("Designation Added Successfully");
+                    return Ok(designation);
+                }
+                else
+                {
+                    throw new DesignationAlreadyExists("Designation Already Exists");
+                }
+            }
+            catch (DesignationAlreadyExists er)
+            {
+                _logger.LogError("httppost designation already exists");
+                return BadRequest(er.Message);
+            }
+            
         }
 
         [HttpDelete]
         public IActionResult DeleteRecord(string name)
         {
-            var designation = _context.Designation.FirstOrDefault(d => d.DepartmentName == name);
-            _context.Designation.Remove(designation);
-            _context.SaveChanges();
+            _logger.LogInformation(name);
+            try
+            {
+                var designation = _context.Designation.FirstOrDefault(d => d.DepartmentName == name);
+                if(designation != null)
+                {
+                    _context.Designation.Remove(designation);
+                    _context.SaveChanges();
 
-            return Ok(designation);
+                    _logger.LogInformation("Designation Deleted Successfully");
+                    return Ok(designation);
+                }
+                else
+                {
+                    throw new DesignationNotFound("Designation Not Found");
+                }
+            }
+            catch (DesignationNotFound er)
+            {
+                _logger.LogError("httpdelete designation not found");
+                return BadRequest(er.Message);
+            }
+            
         }
 
         [HttpPut]
 
         public IActionResult PutRecord(Designation designation, string oldname)
         {
-            var D = _context.Designation.FirstOrDefault(d => d.DesignationName == oldname);
-            _context.Designation.Remove(D);
-            _context.SaveChanges();
+            _logger.LogInformation(designation.DepartmentName + oldname);
+            try
+            {
+                var D = _context.Designation.FirstOrDefault(d => d.DesignationName == oldname);
+                if(D != null)
+                {
+                    _context.Designation.Remove(D);
+                    _context.SaveChanges();
 
-            _context.Designation.Add(designation);
-            _context.SaveChanges();
+                    _context.Designation.Add(designation);
+                    _context.SaveChanges();
 
-            return Ok(designation);
+                    _logger.LogInformation("Designation Edited Successfully");
+                    return Ok(designation);
+                }
+                else
+                {
+                    throw new DesignationNotFound("Designation Not Found");
+                }
+            }
+            catch (DesignationNotFound er)
+            {
+                _logger.LogError("httpput designation not found");
+                return BadRequest(er.Message);
+            }
+            
+            
 
         }
 

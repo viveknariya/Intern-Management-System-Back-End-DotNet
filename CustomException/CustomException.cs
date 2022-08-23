@@ -15,4 +15,18 @@ namespace CustomException
     {
         public IncorrectPassword(string message) : base(message) { }
     }
+
+    public class UserNameAlradyExists : Exception
+    {
+        public UserNameAlradyExists(string message) : base(message) { }
+    }
+
+    public class DesignationAlreadyExists : Exception
+    {
+        public DesignationAlreadyExists(string message) : base(message) { }
+    }
+    public class DesignationNotFound : Exception
+    {
+        public DesignationNotFound(string message) : base(message) { }
+    }
 }
