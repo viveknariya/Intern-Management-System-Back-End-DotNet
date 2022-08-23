@@ -1,6 +1,7 @@
 ﻿using InternManagementSystem.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,15 @@ namespace InternManagementSystem.Controllers
     public class WorkingHourController : ControllerBase
     {
         private readonly InternContext _context = new InternContext();
+
+
+        private readonly ILogger<WorkingHourController> _logger;
+
+
+        public WorkingHourController(ILogger<WorkingHourController> logger)
+        {
+            _logger = logger;
+        }
 
 
         [HttpGet]

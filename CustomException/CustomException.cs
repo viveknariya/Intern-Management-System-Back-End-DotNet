@@ -29,4 +29,14 @@ namespace CustomException
     {
         public DesignationNotFound(string message) : base(message) { }
     }
+
+    public class LeaveAlradyExists : Exception
+    {
+        public LeaveAlradyExists(string message) : base(message) { }
+    }
+
+    public class LeaveNotFound : Exception
+    {
+        public LeaveNotFound(string message) : base(message) { }
+    }
 }

@@ -91,22 +91,28 @@ namespace InternManagementSystem.Controllers
 
         [HttpPut]
 
-        public IActionResult PutRecord(Designation designation, string oldname)
+        public IActionResult PutRecord(DesignationPutBody designation)
         {
-            _logger.LogInformation(designation.DepartmentName + oldname);
+            _logger.LogInformation(designation.DepartmentName);
             try
             {
-                var D = _context.Designation.FirstOrDefault(d => d.DesignationName == oldname);
+                var D = _context.Designation.FirstOrDefault(d => d.DesignationName == designation.OldDesignationName);
                 if(D != null)
                 {
                     _context.Designation.Remove(D);
                     _context.SaveChanges();
 
-                    _context.Designation.Add(designation);
+                    var newDesignation = new Designation();
+
+                    newDesignation.DepartmentName = designation.DepartmentName;
+                    newDesignation.DesignationName = designation.DesignationName;
+                    newDesignation.RoleName = designation.RoleName;
+
+                    _context.Designation.Add(newDesignation);
                     _context.SaveChanges();
 
                     _logger.LogInformation("Designation Edited Successfully");
-                    return Ok(designation);
+                    return Ok(newDesignation);
                 }
                 else
                 {
