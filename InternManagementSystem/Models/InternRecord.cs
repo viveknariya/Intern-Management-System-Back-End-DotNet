@@ -18,7 +18,7 @@ namespace InternManagementSystem.Models
         public string EmailId { get; set; }
         public string InternAddress { get; set; }
         public string InternStatus { get; set; }
-        public string Designation { get; set; }
+        public int? Designation { get; set; }
 
         public virtual Designation DesignationNavigation { get; set; }
         public virtual ICollection<Leave> Leave { get; set; }

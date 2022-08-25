@@ -25,7 +25,7 @@ namespace InternManagementSystem.Models
             if (!optionsBuilder.IsConfigured)
             {
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=.; Database=Intern; User Id=sa; Password=pass@word1;");
+                optionsBuilder.UseSqlServer("Server=C1JUN22;Database=Intern; User Id=sa; Password=pass@word1;");
             }
         }
 
@@ -33,12 +33,11 @@ namespace InternManagementSystem.Models
         {
             modelBuilder.Entity<Designation>(entity =>
             {
-                entity.HasKey(e => e.DesignationName)
-                    .HasName("PK__Designat__372CDC2244152362");
-
-                entity.Property(e => e.DesignationName).HasMaxLength(50);
-
                 entity.Property(e => e.DepartmentName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.DesignationName)
                     .IsRequired()
                     .HasMaxLength(50);
 
@@ -50,11 +49,9 @@ namespace InternManagementSystem.Models
             modelBuilder.Entity<InternRecord>(entity =>
             {
                 entity.HasKey(e => e.InternId)
-                    .HasName("PK__InternRe__6910EDE26420010D");
+                    .HasName("PK__InternRe__6910EDE22FDCDDB8");
 
                 entity.Property(e => e.InternId).HasMaxLength(50);
-
-                entity.Property(e => e.Designation).HasMaxLength(50);
 
                 entity.Property(e => e.EmailId).HasMaxLength(50);
 
@@ -73,7 +70,7 @@ namespace InternManagementSystem.Models
                 entity.HasOne(d => d.DesignationNavigation)
                     .WithMany(p => p.InternRecord)
                     .HasForeignKey(d => d.Designation)
-                    .HasConstraintName("FK__InternRec__Desig__49C3F6B7");
+                    .HasConstraintName("FK__InternRec__Desig__74AE54BC");
             });
 
             modelBuilder.Entity<Leave>(entity =>
@@ -88,13 +85,13 @@ namespace InternManagementSystem.Models
                     .WithMany(p => p.Leave)
                     .HasForeignKey(d => d.InternId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Leave__InternId__4F7CD00D");
+                    .HasConstraintName("FK__Leave__InternId__7A672E12");
             });
 
             modelBuilder.Entity<WorkingHour>(entity =>
             {
                 entity.HasKey(e => e.Whid)
-                    .HasName("PK__WorkingH__83124461BCD15E0B");
+                    .HasName("PK__WorkingH__831244616D5BCF52");
 
                 entity.Property(e => e.Whid).HasColumnName("WHId");
 
@@ -118,7 +115,7 @@ namespace InternManagementSystem.Models
                     .WithMany(p => p.WorkingHour)
                     .HasForeignKey(d => d.InternId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__WorkingHo__Inter__4CA06362");
+                    .HasConstraintName("FK__WorkingHo__Inter__778AC167");
             });
 
             OnModelCreatingPartial(modelBuilder);

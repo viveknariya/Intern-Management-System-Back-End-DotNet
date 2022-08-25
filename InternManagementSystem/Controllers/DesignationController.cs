@@ -1,4 +1,5 @@
 ﻿using CustomException;
+using InternManagementSystem.BusinessLogic;
 using InternManagementSystem.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,14 +15,15 @@ namespace InternManagementSystem.Controllers
     [ApiController]
     public class DesignationController : ControllerBase
     {
-        private readonly InternContext _context = new InternContext();
 
         private readonly ILogger<DesignationController> _logger;
 
+        private readonly DesignationLogic designationlogic;
 
-        public DesignationController(ILogger<DesignationController> logger)
+        public DesignationController(ILogger<DesignationController> logger, ILogger<DesignationLogic> logger2)
         {
             _logger = logger;
+            designationlogic = new DesignationLogic(logger2);
         }
 
 
@@ -29,29 +31,16 @@ namespace InternManagementSystem.Controllers
         public IActionResult DesignationList()
         {
             _logger.LogInformation("Designation List Excuted");
-            return Ok(_context.Designation);
+            return Ok(designationlogic.DesignationList());
         }
 
         [HttpPost]
         public IActionResult AddRecord(Designation designation)
         {
-            _logger.LogInformation(designation.DepartmentName);
-
             try
             {
-                var desi = _context.Designation.FirstOrDefault(d => d.DesignationName == designation.DesignationName);
-                if(desi == null)
-                {
-                    _context.Designation.Add(designation);
-                    _context.SaveChanges();
-
-                    _logger.LogInformation("Designation Added Successfully");
-                    return Ok(designation);
-                }
-                else
-                {
-                    throw new DesignationAlreadyExists("Designation Already Exists");
-                }
+                var temp = designationlogic.AddRecord(designation);
+                return Ok(temp);
             }
             catch (DesignationAlreadyExists er)
             {
@@ -62,24 +51,13 @@ namespace InternManagementSystem.Controllers
         }
 
         [HttpDelete]
-        public IActionResult DeleteRecord(string name)
+        [Route("{id}")]
+        public IActionResult DeleteRecord(int id)
         {
-            _logger.LogInformation(name);
             try
             {
-                var designation = _context.Designation.FirstOrDefault(d => d.DepartmentName == name);
-                if(designation != null)
-                {
-                    _context.Designation.Remove(designation);
-                    _context.SaveChanges();
-
-                    _logger.LogInformation("Designation Deleted Successfully");
-                    return Ok(designation);
-                }
-                else
-                {
-                    throw new DesignationNotFound("Designation Not Found");
-                }
+                var temp = designationlogic.DeleteRecord(id);
+                return Ok(temp);
             }
             catch (DesignationNotFound er)
             {
@@ -91,42 +69,18 @@ namespace InternManagementSystem.Controllers
 
         [HttpPut]
 
-        public IActionResult PutRecord(DesignationPutBody designation)
+        public IActionResult PutRecord(Designation designation)
         {
-            _logger.LogInformation(designation.DepartmentName);
             try
             {
-                var D = _context.Designation.FirstOrDefault(d => d.DesignationName == designation.OldDesignationName);
-                if(D != null)
-                {
-                    _context.Designation.Remove(D);
-                    _context.SaveChanges();
-
-                    var newDesignation = new Designation();
-
-                    newDesignation.DepartmentName = designation.DepartmentName;
-                    newDesignation.DesignationName = designation.DesignationName;
-                    newDesignation.RoleName = designation.RoleName;
-
-                    _context.Designation.Add(newDesignation);
-                    _context.SaveChanges();
-
-                    _logger.LogInformation("Designation Edited Successfully");
-                    return Ok(newDesignation);
-                }
-                else
-                {
-                    throw new DesignationNotFound("Designation Not Found");
-                }
+                var temp = designationlogic.PutRecord(designation);
+                return Ok(temp);
             }
             catch (DesignationNotFound er)
             {
                 _logger.LogError("httpput designation not found");
                 return BadRequest(er.Message);
             }
-            
-            
-
         }
 
     }

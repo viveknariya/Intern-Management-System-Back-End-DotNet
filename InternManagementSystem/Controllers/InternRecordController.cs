@@ -1,4 +1,5 @@
 ﻿using CustomException;
+using InternManagementSystem.BusinessLogic;
 using InternManagementSystem.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,113 +16,88 @@ namespace InternManagementSystem.Controllers
     [ApiController]
     public class InternRecordController : ControllerBase
     {
-        private readonly InternContext _context = new InternContext();
 
         private readonly ILogger<InternRecordController> _logger;
 
-        private readonly IConfiguration _config;
+        private readonly InternLogic internlogic;
 
-        public InternRecordController(ILogger<InternRecordController> logger, IConfiguration config)
+
+        public InternRecordController(ILogger<InternRecordController> logger, ILogger<InternLogic> logger2)
         {
             _logger = logger;
-            _config = config;
+            internlogic = new InternLogic(logger2);
         }
 
         [HttpPost("login")]
         public IActionResult Login(Login login)
         {
-            _logger.LogInformation(login.UserName + login.Password);
             try
             {
-                var user = _context.InternRecord.FirstOrDefault(u => u.InternId == login.UserName);
-                if (user != null)
-                {
-                    if (user.InternPassword == login.Password)
-                    {
-                        _logger.LogInformation("Login Successfull");
-                        return Ok("Login Successfull");
-                    }
-                    else
-                    {
-                        
-                        throw new IncorrectPassword("IncorrectPassword");
-                    }
-
-                }
-                else
-                {
-                    
-                    throw new UserNameNotFound("UserName Not Found");
-                }
+                var temp = internlogic.Login(login);
+                return Ok(temp);
             }
-            catch(UserNameNotFound e)
+            catch (UserNameNotFound e)
             {
                 _logger.LogInformation("Incorrect Password");
                 return BadRequest(e.Message);
             }
-            catch(IncorrectPassword e)
+            catch (IncorrectPassword e)
             {
                 _logger.LogInformation("UserName Not Found");
                 return BadRequest(e.Message);
             }
-            
+
         }
 
         [HttpGet]
         public IActionResult InternList()
         {
-            _logger.LogInformation("Intern List Excuted");
-            return Ok(_context.InternRecord);
+            var temp = internlogic.InternList();
+            return Ok(temp);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult InternRecord(string id)
+        {
+            try
+            {
+                var temp = internlogic.InternRecord(id);
+                return Ok(temp);
+            }
+            catch(UserNameNotFound er)
+            {
+                return BadRequest(er.Message);
+            }
+            
+            
         }
 
         [HttpPost]
         public IActionResult AddRecord(InternRecord intern)
         {
-            _logger.LogInformation(intern.InternId);
 
             try
             {
-                var temp = _context.InternRecord.FirstOrDefault(i => i.InternId == intern.InternId);
-                if(temp == null)
-                {
-                    _context.InternRecord.Add(intern);
-                    _context.SaveChanges();
-                    _logger.LogInformation("Intern Record Added Successfully");
-                    return Ok(intern);
-                }
-                else
-                {
-                    throw new UserNameAlradyExists("UserName Already Exists");
-                }
+                var temp = internlogic.AddRecord(intern);
+                return Ok(temp);
             }
             catch (UserNameAlradyExists er)
             {
                 _logger.LogError("httppost user already exists");
                 return BadRequest(er.Message);
             }
- 
+
         }
 
         [HttpDelete]
+        [Route("{id}")]
         public IActionResult DeleteRecord(string id)
         {
-            _logger.LogInformation(id);
 
             try
             {
-                var intern = _context.InternRecord.FirstOrDefault(i => i.InternId == id);
-                if(intern != null)
-                {
-                    _context.InternRecord.Remove(intern);
-                    _context.SaveChanges();
-
-                    _logger.LogInformation("Intern Record Deleted Successfully");
-                    return Ok(intern);
-                }
-                else
-                {
-                    throw new UserNameNotFound("UserName Not Found");
-                }
+                var temp = internlogic.DeleteRecord(id);
+                return Ok(temp);
             }
             catch (UserNameNotFound er)
             {
@@ -137,30 +113,11 @@ namespace InternManagementSystem.Controllers
 
         public IActionResult PutRecord(InternRecord intern)
         {
-            _logger.LogInformation(intern.InternId);
 
             try
             {
-                var I = _context.InternRecord.FirstOrDefault(i => i.InternId == intern.InternId);
-                if(I != null)
-                {
-                    I.InternName = intern.InternName;
-                    I.InternStatus = intern.InternStatus;
-                    I.InternAddress = intern.InternAddress;
-                    I.Designation = intern.Designation;
-                    I.PhoneNumber = intern.PhoneNumber;
-                    I.EmailId = intern.EmailId;
-
-                    _context.InternRecord.Update(I);
-                    _context.SaveChanges();
-
-                    _logger.LogInformation("Intern Record Changed Successfully");
-                    return Ok(I);
-                }
-                else
-                {
-                    throw new UserNameNotFound("UserName Not Found");
-                }
+                var temp = internlogic.PutRecord(intern);
+                return Ok(temp);
             }
             catch (UserNameNotFound er)
             {

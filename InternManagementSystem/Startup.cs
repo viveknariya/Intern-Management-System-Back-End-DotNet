@@ -27,6 +27,8 @@ namespace InternManagementSystem
         {
             services.AddControllers();
 
+            services.AddCors(c => c.AddPolicy("allow origin", o => o.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+
             services.AddSwaggerGen(d => d.SwaggerDoc("vivek", new Microsoft.OpenApi.Models.OpenApiInfo()));
         }
 
@@ -37,6 +39,7 @@ namespace InternManagementSystem
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors(o => o.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseSwagger();
 
