@@ -1,4 +1,5 @@
 ﻿using CustomException;
+using InternManagementSystem.BusinessLogic;
 using InternManagementSystem.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,9 +15,10 @@ namespace InternManagementSystem.Controllers
     [ApiController]
     public class LeaveController : ControllerBase
     {
-        private readonly InternContext _context = new InternContext();
 
         private readonly ILogger<LeaveController> _logger;
+
+        private readonly LeaveLogic leaveLogic = new LeaveLogic();
 
 
         public LeaveController(ILogger<LeaveController> logger)
@@ -28,68 +30,46 @@ namespace InternManagementSystem.Controllers
         [HttpGet]
         public IActionResult LeaveList()
         {
-            _logger.LogInformation("Leave List Excuted");
-            return Ok(_context.Leave);
+            var temp = leaveLogic.LeaveList();
+            return Ok(temp);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult LeaveRecord(int id)
+        {
+            var temp = leaveLogic.LeaveRecord(id);
+            return Ok(temp);
         }
 
         [HttpPost]
         public IActionResult AddRecord(Leave leave)
         {
-            _logger.LogInformation(leave.InternId);
             try
             {
-                var l = _context.Leave.FirstOrDefault(le => le.InternId == leave.InternId);
-                if(l == null)
-                {
-                    _context.Leave.Add(leave);
-                    _context.SaveChanges();
-
-                    _logger.LogInformation("Leave Added successfully");
-                    return Ok(leave);
-                }
-                else
-                {
-                    if(l.LeaveDate == leave.LeaveDate)
-                    {
-                        throw new LeaveAlradyExists("Leave Already Exists");
-                    }
-                    else
-                    {
-                        _context.Leave.Add(leave);
-                        _context.SaveChanges();
-
-                        _logger.LogInformation("Leave Added Successfully");
-                        return Ok(leave);
-                    }
-                }
+                var temp = leaveLogic.AddRecord(leave);
+                return Ok(temp);
+                
             }
             catch (LeaveAlradyExists er)
             {
                 _logger.LogError("httppost leave already exists");
                 return BadRequest(er.Message);
             }
+            catch (UserNameNotFound er)
+            {
+                _logger.LogError("httppost user name not found");
+                return BadRequest(er.Message);
+            }
         }
 
-        [HttpDelete]
-        public IActionResult DeleteRecord(Leave L)
+        [HttpDelete("{id}")]
+        public IActionResult DeleteRecord(int id)
         {
-            _logger.LogInformation(L.InternId);
             try
             {
-                var leave = _context.Leave.FirstOrDefault(l => l.InternId == L.InternId && l.LeaveDate == L.LeaveDate);
-                if(leave != null)
-                {
-                    _context.Leave.Remove(leave);
-                    _context.SaveChanges();
-
-                    _logger.LogInformation("Leave Deleted Successfully");
-                    return Ok(leave);
-                }
-                else
-                {
-                    throw new LeaveNotFound("Leave Not Found");
-                }
-
+                var temp = leaveLogic.DeleteRecord(id);
+                return Ok(temp);
+               
             }
             catch (LeaveNotFound er)
             {
@@ -100,27 +80,13 @@ namespace InternManagementSystem.Controllers
         }
 
         [HttpPut]
-
         public IActionResult PutRecord(Leave leave)
         {
             try
             {
-                var L = _context.Leave.FirstOrDefault(l => l.LeaveId == leave.LeaveId);
-                if(L != null)
-                {
-                    L.LeaveDate = leave.LeaveDate;
-                    L.Reason = leave.Reason;
-
-                    _context.Leave.Update(L);
-                    _context.SaveChanges();
-
-                    _logger.LogInformation("Leave Record Changed Successfully");
-                    return Ok(L);
-                }
-                else
-                {
-                    throw new LeaveNotFound("Leave Not Found");
-                }
+                var temp = leaveLogic.PutRecord(leave);
+                return Ok(leave);
+                
             }
             catch (LeaveNotFound er)
             {

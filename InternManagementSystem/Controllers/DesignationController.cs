@@ -18,12 +18,11 @@ namespace InternManagementSystem.Controllers
 
         private readonly ILogger<DesignationController> _logger;
 
-        private readonly DesignationLogic designationlogic;
+        private readonly DesignationLogic designationlogic = new DesignationLogic();
 
-        public DesignationController(ILogger<DesignationController> logger, ILogger<DesignationLogic> logger2)
+        public DesignationController(ILogger<DesignationController> logger)
         {
             _logger = logger;
-            designationlogic = new DesignationLogic(logger2);
         }
 
 
@@ -32,6 +31,22 @@ namespace InternManagementSystem.Controllers
         {
             _logger.LogInformation("Designation List Excuted");
             return Ok(designationlogic.DesignationList());
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult DesignationRecord(int id)
+        {
+            try
+            {
+                var temp = designationlogic.DesignationRecord(id);
+                return Ok(temp);
+            }
+            catch (DesignationNotFound er)
+            {
+                return BadRequest(er.Message);
+            }
+
+
         }
 
         [HttpPost]
@@ -50,8 +65,7 @@ namespace InternManagementSystem.Controllers
             
         }
 
-        [HttpDelete]
-        [Route("{id}")]
+        [HttpDelete("{id}")]
         public IActionResult DeleteRecord(int id)
         {
             try

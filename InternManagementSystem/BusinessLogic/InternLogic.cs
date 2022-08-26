@@ -12,13 +12,6 @@ namespace InternManagementSystem.BusinessLogic
     {
         private readonly InternContext _context = new InternContext();
 
-        private readonly ILogger<InternLogic> _logger;
-
-        public InternLogic(ILogger<InternLogic> logger)
-        {
-            _logger = logger;
-        }
-
         public InternRecord Login(Login login)
         {
             try
@@ -28,7 +21,6 @@ namespace InternManagementSystem.BusinessLogic
                 {
                     if (user.InternPassword == login.Password)
                     {
-                        _logger.LogInformation("Login Successfull");
                         return user;
                     }
                     else
@@ -46,20 +38,33 @@ namespace InternManagementSystem.BusinessLogic
             }
             catch (UserNameNotFound)
             {
-                _logger.LogInformation("Incorrect Password");
                 throw;
             }
             catch (IncorrectPassword)
             {
-                _logger.LogInformation("UserName Not Found");
                 throw;
             }
 
         }
 
-        public List<InternRecord> InternList()
+        public IQueryable<object> InternList()
         {
-            return _context.InternRecord.ToList();
+            var temp = from i in _context.InternRecord
+                       join d in _context.Designation on i.Designation equals d.DesignationId into leftRecord
+                       from l in leftRecord.DefaultIfEmpty()
+                       select new
+                       {
+                            InternId = i.InternId,
+                            InternPassword = i.InternPassword,
+                            InternName = i.InternName,
+                            PhoneNumber  = i.PhoneNumber,
+                            EmailId = i.EmailId,
+                            InternAddress = i.InternAddress,
+                            InternStatus = i.InternStatus,
+                            Designation = l.DepartmentName
+                        };
+
+            return temp;
         }
 
         public InternRecord InternRecord(string id)
@@ -92,7 +97,7 @@ namespace InternManagementSystem.BusinessLogic
                 {
                     _context.InternRecord.Add(intern);
                     _context.SaveChanges();
-                    _logger.LogInformation("Intern Record Added Successfully");
+
                     return intern;
                 }
                 else
@@ -102,7 +107,6 @@ namespace InternManagementSystem.BusinessLogic
             }
             catch (UserNameAlradyExists)
             {
-                _logger.LogError("httppost user already exists");
                 throw;
             }
 
@@ -120,8 +124,8 @@ namespace InternManagementSystem.BusinessLogic
                     foreach (Leave l in leave)
                     {
                         _context.Leave.Remove(l);
-                        _context.SaveChanges();
                     }
+                    _context.SaveChanges();
 
                 }
 
@@ -131,8 +135,8 @@ namespace InternManagementSystem.BusinessLogic
                     foreach (WorkingHour w in workinghour)
                     {
                         _context.WorkingHour.Remove(w);
-                        _context.SaveChanges();
                     }
+                    _context.SaveChanges();
 
                 }
 
@@ -143,7 +147,6 @@ namespace InternManagementSystem.BusinessLogic
                     _context.InternRecord.Remove(intern);
                     _context.SaveChanges();
 
-                    _logger.LogInformation("Intern Record Deleted Successfully");
                     return intern;
                 }
                 else
@@ -153,7 +156,6 @@ namespace InternManagementSystem.BusinessLogic
             }
             catch (UserNameNotFound)
             {
-                _logger.LogError("httpdelete user not found");
                 throw;
             }
 
@@ -180,7 +182,6 @@ namespace InternManagementSystem.BusinessLogic
                     _context.InternRecord.Update(I);
                     _context.SaveChanges();
 
-                    _logger.LogInformation("Intern Record Changed Successfully");
                     return I;
                 }
                 else
@@ -190,7 +191,6 @@ namespace InternManagementSystem.BusinessLogic
             }
             catch (UserNameNotFound)
             {
-                _logger.LogError("httpput user not found");
                 throw;
             }
         }

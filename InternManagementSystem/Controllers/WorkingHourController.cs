@@ -1,4 +1,5 @@
 ﻿using CustomException;
+using InternManagementSystem.BusinessLogic;
 using InternManagementSystem.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,16 +9,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace InternManagementSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class WorkingHourController : ControllerBase
     {
-        private readonly InternContext _context = new InternContext();
-
 
         private readonly ILogger<WorkingHourController> _logger;
+
+        private readonly WorkingHourLogic whlogic =  new WorkingHourLogic();
 
 
         public WorkingHourController(ILogger<WorkingHourController> logger)
@@ -28,32 +30,32 @@ namespace InternManagementSystem.Controllers
 
         [HttpGet]
         public IActionResult workingHourData()
-            
         {
+            var temp = whlogic.workingHourData();
+            return Ok(temp);
+        }
 
-            _logger.LogInformation("WorkingHour Data Excuted");
-            return Ok(_context.WorkingHour);
+        [HttpGet("{id}")]
+        public IActionResult workingHourRecord(int id)
+        {
+            try
+            {
+                var temp = whlogic.WorikingHourRecord(id);
+                return Ok(temp);
+            }
+            catch (WorkingDataNotFound er)
+            {
+                return BadRequest(er.Message);
+            }
         }
 
         [HttpPost]
         public IActionResult AddRecord(WorkingHour wh)
         {
-            _logger.LogInformation(wh.InternId);
             try
             {
-                var temp = _context.WorkingHour.FirstOrDefault(w => w.InternId == wh.InternId && w.Monthly == wh.Monthly);
-                if(temp == null)
-                {
-                    _context.WorkingHour.Add(wh);
-                    _context.SaveChanges();
-
-                    _logger.LogInformation("Working Data Added Successfully");
-                    return Ok(wh);
-                }
-                else
-                {
-                    throw new WorkingDataAlreadyExists("Working Data Already Exists");
-                }
+                var temp = whlogic.AddRecord(wh);
+                return Ok(temp);
 
             }
             catch (WorkingDataAlreadyExists er)
@@ -64,25 +66,13 @@ namespace InternManagementSystem.Controllers
             
         }
 
-        [HttpDelete]
-        public IActionResult DeleteRecord(WorkingHour workinghour)
+        [HttpDelete("{id}")]
+        public IActionResult DeleteRecord(int id)
         {
-            _logger.LogInformation(workinghour.InternId);
             try
             {
-                var wh = _context.WorkingHour.FirstOrDefault(w => w.Whid == workinghour.Whid);
-                if(wh != null)
-                {
-                    _context.WorkingHour.Remove(wh);
-                    _context.SaveChanges();
-
-                    _logger.LogInformation("Working Data Deleted Successfully");
-                    return Ok(wh);
-                }
-                else
-                {
-                    throw new WorkingDataNotFound("Working Data Not Found");
-                }
+                var temp = whlogic.DeleteRecord(id);
+                return Ok(temp);
             }
             catch (WorkingDataNotFound er)
             {
@@ -98,25 +88,10 @@ namespace InternManagementSystem.Controllers
 
         public IActionResult PutRecord(WorkingHour wh)
         {
-            _logger.LogInformation(wh.InternId);
             try
             {
-                var workingHour = _context.WorkingHour.FirstOrDefault(w => w.Whid == wh.Whid);
-                if(workingHour != null)
-                {
-                    workingHour.CompanyWorkingHour = wh.CompanyWorkingHour;
-                    workingHour.InternWorkingHour = wh.InternWorkingHour;
-
-                    _context.WorkingHour.Update(workingHour);
-                    _context.SaveChanges();
-
-                    _logger.LogInformation("Working Data Record Changed Successfully");
-                    return Ok(workingHour);
-                }
-                else
-                {
-                    throw new WorkingDataNotFound("Working Data Not Found");
-                }
+                var temp = whlogic.PutRecord(wh);
+                return Ok(temp);
             }
             catch(WorkingDataNotFound er)
             {
@@ -124,8 +99,6 @@ namespace InternManagementSystem.Controllers
                 return BadRequest(er.Message);
             }
             
-            
-
         }
     }
 }

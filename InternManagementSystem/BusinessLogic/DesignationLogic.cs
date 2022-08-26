@@ -12,16 +12,33 @@ namespace InternManagementSystem.BusinessLogic
     {
         private readonly InternContext _context = new InternContext();
 
-        private readonly ILogger<DesignationLogic> _logger ;
 
-        public DesignationLogic(ILogger<DesignationLogic> logger)
-        {
-            _logger = logger;
-        }
+        private readonly InternLogic internlogic = new InternLogic();
+
 
         public  List<Designation> DesignationList()
         {
             return _context.Designation.ToList();
+        }
+
+        public Designation DesignationRecord(int id)
+        {
+            try
+            {
+                var temp = _context.Designation.FirstOrDefault(i => i.DesignationId == id);
+                if (temp != null)
+                {
+                    return temp;
+                }
+                else
+                {
+                    throw new DesignationNotFound("Designation Not Found");
+                }
+            }
+            catch (DesignationNotFound)
+            {
+                throw;
+            }
         }
 
         public  Designation AddRecord(Designation designation)
@@ -70,7 +87,6 @@ namespace InternManagementSystem.BusinessLogic
             {
                 throw;
             }
-
         }
 
 

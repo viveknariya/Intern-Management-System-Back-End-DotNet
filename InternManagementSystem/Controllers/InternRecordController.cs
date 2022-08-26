@@ -19,13 +19,12 @@ namespace InternManagementSystem.Controllers
 
         private readonly ILogger<InternRecordController> _logger;
 
-        private readonly InternLogic internlogic;
+        private readonly InternLogic internlogic =  new InternLogic();
 
 
-        public InternRecordController(ILogger<InternRecordController> logger, ILogger<InternLogic> logger2)
+        public InternRecordController(ILogger<InternRecordController> logger)
         {
             _logger = logger;
-            internlogic = new InternLogic(logger2);
         }
 
         [HttpPost("login")]
@@ -89,8 +88,7 @@ namespace InternManagementSystem.Controllers
 
         }
 
-        [HttpDelete]
-        [Route("{id}")]
+        [HttpDelete("{id}")]
         public IActionResult DeleteRecord(string id)
         {
 
