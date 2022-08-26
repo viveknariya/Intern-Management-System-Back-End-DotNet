@@ -7,3 +7,4 @@ C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\CustomException\obj\D
 C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\CustomException\obj\Debug\netcoreapp3.1\CustomException.csproj.CoreCompileInputs.cache
 C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\CustomException\obj\Debug\netcoreapp3.1\CustomException.dll
 C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\CustomException\obj\Debug\netcoreapp3.1\CustomException.pdb
+C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\CustomException\obj\Debug\netcoreapp3.1\CustomException.csproj.AssemblyReference.cache
