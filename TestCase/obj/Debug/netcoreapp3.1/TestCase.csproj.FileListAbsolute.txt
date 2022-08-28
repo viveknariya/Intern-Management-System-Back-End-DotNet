@@ -141,3 +141,8 @@ C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\TestCase\obj\Debug\ne
 C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\TestCase\obj\Debug\netcoreapp3.1\TestCase.dll
 C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\TestCase\obj\Debug\netcoreapp3.1\TestCase.pdb
 C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\TestCase\obj\Debug\netcoreapp3.1\TestCase.genruntimeconfig.cache
+C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\TestCase\bin\Debug\netcoreapp3.1\Castle.Core.dll
+C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\TestCase\bin\Debug\netcoreapp3.1\Moq.dll
+C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\TestCase\bin\Debug\netcoreapp3.1\Autofac.dll
+C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\TestCase\bin\Debug\netcoreapp3.1\Autofac.Extras.Moq.dll
+C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\TestCase\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll

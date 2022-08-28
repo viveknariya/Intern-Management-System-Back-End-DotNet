@@ -1,3 +1,4 @@
+using InternManagementSystem.BusinessLogic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +27,8 @@ namespace InternManagementSystem
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddScoped<IIntern, InternLogic>();
 
             services.AddCors(c => c.AddPolicy("allow origin", o => o.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 

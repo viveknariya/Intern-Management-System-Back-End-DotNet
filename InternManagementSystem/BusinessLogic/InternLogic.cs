@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace InternManagementSystem.BusinessLogic
 {
-    public class InternLogic
+    public class InternLogic : IIntern
     {
         private readonly InternContext _context = new InternContext();
 
@@ -121,10 +121,8 @@ namespace InternManagementSystem.BusinessLogic
                 var leave = _context.Leave.Where(l => l.InternId == id);
                 if (leave != null)
                 {
-                    foreach (Leave l in leave)
-                    {
-                        _context.Leave.Remove(l);
-                    }
+                    
+                    _context.Leave.RemoveRange(leave);
                     _context.SaveChanges();
 
                 }
@@ -132,10 +130,8 @@ namespace InternManagementSystem.BusinessLogic
                 var workinghour = _context.WorkingHour.Where(w => w.InternId == id);
                 if (workinghour != null)
                 {
-                    foreach (WorkingHour w in workinghour)
-                    {
-                        _context.WorkingHour.Remove(w);
-                    }
+                    
+                    _context.WorkingHour.RemoveRange(workinghour);
                     _context.SaveChanges();
 
                 }

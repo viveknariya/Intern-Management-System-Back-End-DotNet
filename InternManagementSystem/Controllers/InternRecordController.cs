@@ -19,11 +19,10 @@ namespace InternManagementSystem.Controllers
 
         private readonly ILogger<InternRecordController> _logger;
 
-        private readonly InternLogic internlogic =  new InternLogic();
-
-
-        public InternRecordController(ILogger<InternRecordController> logger)
+        private readonly IIntern internlogic;
+        public InternRecordController(IIntern intern, ILogger<InternRecordController> logger)
         {
+            internlogic = intern;
             _logger = logger;
         }
 

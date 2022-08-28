@@ -1,6 +1,12 @@
+using Autofac.Extras.Moq;
 using InternManagementSystem.BusinessLogic;
+using InternManagementSystem.Controllers;
 using InternManagementSystem.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using System.Net;
 
 namespace TestCase
 {
@@ -11,43 +17,107 @@ namespace TestCase
         [TestMethod]
         public void InternLogin()
         {
-            Login login = new Login { UserName = "test", Password = "test" };
 
-            InternRecord intern = new InternRecord { InternId = "test", InternPassword="test"};
+            using (var mock = AutoMock.GetLoose())
+            {
+                Login login = new Login { UserName = "test", Password = "test" };
 
-            InternLogic internLogic = new InternLogic();
+                InternRecord intern = new InternRecord { InternId = "test", InternPassword = "test" };
+                mock.Mock<IIntern>()
+                    .Setup(x => x.Login(login))
+                    .Returns(intern);
 
-            var result = internLogic.Login(login);
+                var cls = mock.Create<InternRecordController>();
 
-            Assert.AreEqual(result.InternId, login.UserName);
-            Assert.AreEqual(result.InternPassword, login.Password);
+                var result = cls.Login(login) as OkObjectResult;
+
+                Assert.AreEqual(200, result.StatusCode);
+
+            }
+
         }
 
         [TestMethod]
         public void InternRecord()
         {
 
-            InternRecord intern = new InternRecord { InternId = "test", InternPassword = "test"};
+            using (var mock = AutoMock.GetLoose())
+            {
 
-            InternLogic internLogic = new InternLogic();
+                InternRecord intern = new InternRecord { InternId = "test", InternPassword = "test" };
+                mock.Mock<IIntern>()
+                    .Setup(x => x.InternRecord("test"))
+                    .Returns(intern);
 
-            var result = internLogic.InternRecord("test");
+                var cls = mock.Create<InternRecordController>();
 
-            Assert.AreEqual(result.InternPassword, internLogic.InternRecord("test").InternName);
+                var result = cls.InternRecord("test") as OkObjectResult;
+
+                Assert.AreEqual(200, result.StatusCode);
+
+            }
+
         }       
 
         [TestMethod]
         public void EditInternRecord()
         {
+            using (var mock = AutoMock.GetLoose())
+            {
 
-            InternRecord intern = new InternRecord { InternId = "vivektest", InternPassword = "vivektest", InternName = "newvivektest" };
+                InternRecord intern = new InternRecord { InternId = "vivektest", InternPassword = "vivektest", InternName = "newvivektest" };
+                mock.Mock<IIntern>()
+                    .Setup(x => x.PutRecord(intern))
+                    .Returns(intern);
 
-            InternLogic internLogic = new InternLogic();
+                var cls = mock.Create<InternRecordController>();
 
-            var result = internLogic.PutRecord(intern);
+                var result = cls.PutRecord(intern) as OkObjectResult;
 
-            Assert.AreEqual(result.InternName, internLogic.InternRecord("vivektest").InternName);
+                Assert.AreEqual(200, result.StatusCode);
+
+            }
+
         }
 
+        [TestMethod]
+        public void InternAddRecord()
+        {
+            using (var mock = AutoMock.GetLoose())
+            {
+                InternRecord intern = new InternRecord { InternId = "test", InternPassword = "test" };
+                mock.Mock<IIntern>()
+                    .Setup(x => x.AddRecord(intern))
+                    .Returns(intern);
+
+                var cls = mock.Create<InternRecordController>();
+
+                var result = cls.AddRecord(intern) as OkObjectResult;
+
+                Assert.AreEqual(200, result.StatusCode);
+
+            }
+            
+        }
+
+        [TestMethod]
+        public void InternDeleteRecord()
+        {
+            using (var mock = AutoMock.GetLoose())
+            {
+                InternRecord intern = new InternRecord { InternId = "test", InternPassword = "test" };
+                mock.Mock<IIntern>()
+                    .Setup(x => x.DeleteRecord("test"))
+                    .Returns(intern);
+
+                var cls = mock.Create<InternRecordController>();
+
+                var result = cls.DeleteRecord("test") as OkObjectResult;
+
+                Assert.AreEqual(200, result.StatusCode);
+
+            }
+
+        }
     }
 }
