@@ -11,7 +11,7 @@ using System.Net;
 namespace TestCase
 {
     [TestClass]
-    public class UnitTest1
+    public class Test
     {
        
         [TestMethod]
@@ -113,6 +113,89 @@ namespace TestCase
                 var cls = mock.Create<InternRecordController>();
 
                 var result = cls.DeleteRecord("test") as OkObjectResult;
+
+                Assert.AreEqual(200, result.StatusCode);
+
+            }
+
+        }
+
+        [TestMethod]
+        public void DesignationRecord()
+        {
+
+            using (var mock = AutoMock.GetLoose())
+            {
+
+                Designation designation = new Designation { DesignationName = "tester", RoleName = "testing" };
+                mock.Mock<IDesignation>()
+                    .Setup(x => x.DesignationRecord(10))
+                    .Returns(designation);
+
+                var cls = mock.Create<DesignationController>();
+
+                var result = cls.DesignationRecord(10) as OkObjectResult;
+
+                Assert.AreEqual(200, result.StatusCode);
+
+            }
+
+        }
+
+        [TestMethod]
+        public void EditDesignationRecord()
+        {
+            using (var mock = AutoMock.GetLoose())
+            {
+
+                Designation designation = new Designation { DesignationName = "tester", RoleName = "testing" };
+                mock.Mock<IDesignation>()
+                    .Setup(x => x.PutRecord(designation))
+                    .Returns(designation);
+
+                var cls = mock.Create<DesignationController>();
+
+                var result = cls.PutRecord(designation) as OkObjectResult;
+
+                Assert.AreEqual(200, result.StatusCode);
+
+            }
+
+        }
+
+        [TestMethod]
+        public void DesignationAddRecord()
+        {
+            using (var mock = AutoMock.GetLoose())
+            {
+                Designation designation = new Designation { DesignationName = "tester", RoleName = "testing" };
+                mock.Mock<IDesignation>()
+                    .Setup(x => x.AddRecord(designation))
+                    .Returns(designation);
+
+                var cls = mock.Create<DesignationController>();
+
+                var result = cls.AddRecord(designation) as OkObjectResult;
+
+                Assert.AreEqual(200, result.StatusCode);
+
+            }
+
+        }
+
+        [TestMethod]
+        public void DesignationDeleteRecord()
+        {
+            using (var mock = AutoMock.GetLoose())
+            {
+                Designation designation = new Designation { DesignationName = "tester", RoleName = "testing" };
+                mock.Mock<IDesignation>()
+                    .Setup(x => x.DeleteRecord(10))
+                    .Returns(designation);
+
+                var cls = mock.Create<DesignationController>();
+
+                var result = cls.DeleteRecord(10) as OkObjectResult;
 
                 Assert.AreEqual(200, result.StatusCode);
 

@@ -11,7 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace InternManagementSystem.Controllers
-{
+{ 
     [Route("api/[controller]")]
     [ApiController]
     public class InternRecordController : ControllerBase

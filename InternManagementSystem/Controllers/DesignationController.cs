@@ -18,11 +18,12 @@ namespace InternManagementSystem.Controllers
 
         private readonly ILogger<DesignationController> _logger;
 
-        private readonly DesignationLogic designationlogic = new DesignationLogic();
+        private readonly IDesignation designationlogic;
 
-        public DesignationController(ILogger<DesignationController> logger)
+        public DesignationController(ILogger<DesignationController> logger, IDesignation dlogic)
         {
             _logger = logger;
+            designationlogic = dlogic;
         }
 
 

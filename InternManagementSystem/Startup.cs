@@ -29,6 +29,8 @@ namespace InternManagementSystem
             services.AddControllers();
 
             services.AddScoped<IIntern, InternLogic>();
+            services.AddScoped<IDesignation, DesignationLogic>();
+
 
             services.AddCors(c => c.AddPolicy("allow origin", o => o.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace InternManagementSystem.BusinessLogic
 {
-    public class DesignationLogic
+    public class DesignationLogic : IDesignation
     {
         private readonly InternContext _context = new InternContext();
 
