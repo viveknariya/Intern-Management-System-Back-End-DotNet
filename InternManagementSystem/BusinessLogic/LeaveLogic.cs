@@ -8,13 +8,35 @@ using System.Threading.Tasks;
 
 namespace InternManagementSystem.BusinessLogic
 {
-    public class LeaveLogic
+    public class LeaveLogic : ILeave
     {
         private readonly InternContext _context = new InternContext();
 
         public List<Leave> LeaveList()
         {
             return _context.Leave.ToList();
+        }
+
+        public List<Leave> LeaveByIntern(string id)
+        {
+            try
+            {
+                var temp = _context.Leave.Where(i => i.InternId == id);
+                if(temp != null)
+                {
+                    return temp.ToList();
+                }
+                else
+                {
+                    throw new Exception();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+
+            
         }
 
         public Leave LeaveRecord(int id)

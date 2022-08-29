@@ -61,7 +61,7 @@ namespace InternManagementSystem.BusinessLogic
                             EmailId = i.EmailId,
                             InternAddress = i.InternAddress,
                             InternStatus = i.InternStatus,
-                            Designation = l.DepartmentName
+                            Designation = l.DesignationName
                         };
 
             return temp;

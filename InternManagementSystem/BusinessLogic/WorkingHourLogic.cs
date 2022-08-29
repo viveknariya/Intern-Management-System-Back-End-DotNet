@@ -20,7 +20,27 @@ namespace InternManagementSystem.BusinessLogic
             return _context.WorkingHour.ToList();
         }
 
-        public WorkingHour WorikingHourRecord(int id)
+        public List<WorkingHour> WhbyIntern(string id)
+        {
+            try
+            {
+                var temp = _context.WorkingHour.Where(i => i.InternId == id);
+                if (temp != null)
+                {
+                    return temp.ToList();
+                }
+                else
+                {
+                    throw new Exception();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+            public WorkingHour WorikingHourRecord(int id)
         {
             try
             {
@@ -45,8 +65,14 @@ namespace InternManagementSystem.BusinessLogic
         {
             try
             {
-                var temp = _context.WorkingHour.FirstOrDefault(w => w.InternId == wh.InternId && w.Monthly == wh.Monthly);
+                var temp = _context.InternRecord.FirstOrDefault(i => i.InternId == wh.InternId);
                 if (temp == null)
+                {
+                    throw new UserNameNotFound("User Name Not Found");
+                }
+
+                var temp2 = _context.WorkingHour.FirstOrDefault(w => w.InternId == wh.InternId && w.Monthly == wh.Monthly);
+                if (temp2 == null)
                 {
                     _context.WorkingHour.Add(wh);
                     _context.SaveChanges();
@@ -59,10 +85,15 @@ namespace InternManagementSystem.BusinessLogic
                 }
 
             }
-            catch (WorkingDataAlreadyExists er)
+            catch (WorkingDataAlreadyExists)
             {
                 throw;
             }
+            catch (UserNameNotFound)
+            {
+                throw;
+            }
+
 
         }
 

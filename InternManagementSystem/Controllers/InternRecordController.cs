@@ -36,12 +36,12 @@ namespace InternManagementSystem.Controllers
             }
             catch (UserNameNotFound e)
             {
-                _logger.LogInformation("Incorrect Password");
+                _logger.LogInformation("UserName Not Found");
                 return BadRequest(e.Message);
             }
             catch (IncorrectPassword e)
             {
-                _logger.LogInformation("UserName Not Found");
+                _logger.LogInformation("Incorrect Password");
                 return BadRequest(e.Message);
             }
 

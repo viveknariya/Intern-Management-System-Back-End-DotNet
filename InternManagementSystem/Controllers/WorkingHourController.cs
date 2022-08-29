@@ -35,6 +35,13 @@ namespace InternManagementSystem.Controllers
             return Ok(temp);
         }
 
+        [HttpGet("intern/{id}")]
+        public IActionResult whByIntern(string id)
+        {
+            var temp = whlogic.WhbyIntern(id);
+            return Ok(temp);
+        }
+
         [HttpGet("{id}")]
         public IActionResult workingHourRecord(int id)
         {
@@ -61,6 +68,11 @@ namespace InternManagementSystem.Controllers
             catch (WorkingDataAlreadyExists er)
             {
                 _logger.LogError("httppost data already exists");
+                return BadRequest(er.Message);
+            }
+            catch(UserNameNotFound er)
+            {
+                _logger.LogError("user name not found");
                 return BadRequest(er.Message);
             }
             

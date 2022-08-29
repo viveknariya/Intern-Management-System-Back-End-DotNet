@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using System.Collections.Generic;
 using System.Net;
 
 namespace TestCase
@@ -196,6 +197,109 @@ namespace TestCase
                 var cls = mock.Create<DesignationController>();
 
                 var result = cls.DeleteRecord(10) as OkObjectResult;
+
+                Assert.AreEqual(200, result.StatusCode);
+
+            }
+
+        }
+
+
+        [TestMethod]
+        public void LeavebyIntern(string id)
+        {
+            using (var mock = AutoMock.GetLoose())
+            {
+                List<Leave> leave = new List<Leave>();
+                leave.Add(new Leave { LeaveId = 10, LeaveDate = new System.DateTime(2020, 09, 09), Reason = "sick", InternId = "test" });
+                mock.Mock<ILeave>()
+                    .Setup(x => x.LeaveByIntern("test"))
+                    .Returns(leave);
+
+                var cls = mock.Create<LeaveController>();
+
+                var result = cls.LeavebyIntern("test") as OkObjectResult;
+
+                Assert.AreEqual(200, result.StatusCode);
+
+            }
+        }
+
+        [TestMethod]
+        public void LeaveRecord(int id)
+        {
+            using (var mock = AutoMock.GetLoose())
+            {
+                Leave leave = new Leave { LeaveId = 10, LeaveDate = new System.DateTime(2020, 09, 09), Reason = "sick", InternId = "test" };
+                mock.Mock<ILeave>()
+                    .Setup(x => x.LeaveRecord(10))
+                    .Returns(leave);
+
+                var cls = mock.Create<LeaveController>();
+
+                var result = cls.LeaveRecord(10) as OkObjectResult;
+
+                Assert.AreEqual(200, result.StatusCode);
+
+            }
+        }
+
+        [TestMethod]
+        public void AddRecord()
+        {
+
+            using (var mock = AutoMock.GetLoose())
+            {
+                Leave leave = new Leave { LeaveId = 10, LeaveDate = new System.DateTime(2020, 09, 09), Reason = "sick", InternId = "test" };
+
+                mock.Mock<ILeave>()
+                    .Setup(x => x.AddRecord(leave))
+                    .Returns(leave);
+
+                var cls = mock.Create<LeaveController>();
+
+                var result = cls.AddRecord(leave) as OkObjectResult;
+
+                Assert.AreEqual(200, result.StatusCode);
+
+            }
+        }
+
+        [TestMethod]
+        public void DeleteRecord()
+        {
+            using (var mock = AutoMock.GetLoose())
+            {
+                Leave leave = new Leave { LeaveId = 10, LeaveDate = new System.DateTime(2020, 09, 09), Reason = "sick", InternId = "test" };
+
+                mock.Mock<ILeave>()
+                    .Setup(x => x.DeleteRecord(10))
+                    .Returns(leave);
+
+                var cls = mock.Create<LeaveController>();
+
+                var result = cls.DeleteRecord(10) as OkObjectResult;
+
+                Assert.AreEqual(200, result.StatusCode);
+
+            }
+
+        }
+
+        [TestMethod]
+        public void PutRecord()
+        {
+            using (var mock = AutoMock.GetLoose())
+            {
+                Leave leave = new Leave { LeaveId = 10, LeaveDate = new System.DateTime(2020, 09, 09), Reason = "sick", InternId = "test" };
+
+                mock.Mock<ILeave>()
+                    .Setup(x => x.PutRecord(leave))
+                    .Returns(leave);
+
+                var cls = mock.Create<LeaveController>();
+
+                var result = cls.PutRecord(leave) as OkObjectResult;
 
                 Assert.AreEqual(200, result.StatusCode);
 

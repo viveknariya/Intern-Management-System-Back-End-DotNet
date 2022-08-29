@@ -18,12 +18,13 @@ namespace InternManagementSystem.Controllers
 
         private readonly ILogger<LeaveController> _logger;
 
-        private readonly LeaveLogic leaveLogic = new LeaveLogic();
+        private readonly ILeave leaveLogic;
 
 
-        public LeaveController(ILogger<LeaveController> logger)
+        public LeaveController(ILogger<LeaveController> logger,ILeave leaveLogi)
         {
             _logger = logger;
+            leaveLogic = leaveLogi;
         }
 
 
@@ -31,6 +32,12 @@ namespace InternManagementSystem.Controllers
         public IActionResult LeaveList()
         {
             var temp = leaveLogic.LeaveList();
+            return Ok(temp);
+        }
+        [HttpGet("intern/{id}")]
+        public IActionResult LeavebyIntern(string id)
+        {
+            var temp = leaveLogic.LeaveByIntern(id);
             return Ok(temp);
         }
 
