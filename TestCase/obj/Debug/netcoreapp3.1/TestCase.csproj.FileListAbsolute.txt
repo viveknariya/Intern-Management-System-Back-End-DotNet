@@ -146,3 +146,6 @@ C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\TestCase\bin\Debug\ne
 C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\TestCase\bin\Debug\netcoreapp3.1\Autofac.dll
 C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\TestCase\bin\Debug\netcoreapp3.1\Autofac.Extras.Moq.dll
 C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\TestCase\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
+C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\TestCase\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\TestCase\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\mindc1jun155\Desktop\Final\InternManagementSystem\TestCase\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll

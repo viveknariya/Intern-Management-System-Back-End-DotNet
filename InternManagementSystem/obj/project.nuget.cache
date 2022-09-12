@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "2L18Wj5KSDiV83NhBRH+1L5lbDYq/CQ1MB4mU/P5XfrXIty0cSwJSng5sE/qd7XNr8HWcuYcUtkbac9nnA9q9A==",
+  "dgSpecHash": "tDqO14e/uPZP6DpqXDuKZAtjdTwcicY9mrfzj8gNpUqXgoNCHUcViwO5rN7M0/8tz47repninyT3Q6xwadBeVQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\mindc1jun155\\Desktop\\Final\\InternManagementSystem\\InternManagementSystem\\InternManagementSystem.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,8 @@
     "C:\\Users\\mindc1jun155\\.nuget\\packages\\autofac.extras.moq\\6.1.0\\autofac.extras.moq.6.1.0.nupkg.sha512",
     "C:\\Users\\mindc1jun155\\.nuget\\packages\\castle.core\\5.1.0\\castle.core.5.1.0.nupkg.sha512",
     "C:\\Users\\mindc1jun155\\.nuget\\packages\\log4net\\2.0.13\\log4net.2.0.13.nupkg.sha512",
+    "C:\\Users\\mindc1jun155\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.1.0\\microsoft.aspnetcore.jsonpatch.3.1.0.nupkg.sha512",
+    "C:\\Users\\mindc1jun155\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\3.1.0\\microsoft.aspnetcore.mvc.newtonsoftjson.3.1.0.nupkg.sha512",
     "C:\\Users\\mindc1jun155\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.0\\microsoft.bcl.asyncinterfaces.1.1.0.nupkg.sha512",
     "C:\\Users\\mindc1jun155\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.0\\microsoft.bcl.hashcode.1.1.0.nupkg.sha512",
     "C:\\Users\\mindc1jun155\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
@@ -38,6 +40,8 @@
     "C:\\Users\\mindc1jun155\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\mindc1jun155\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\mindc1jun155\\.nuget\\packages\\moq\\4.18.2\\moq.4.18.2.nupkg.sha512",
+    "C:\\Users\\mindc1jun155\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
+    "C:\\Users\\mindc1jun155\\.nuget\\packages\\newtonsoft.json.bson\\1.0.2\\newtonsoft.json.bson.1.0.2.nupkg.sha512",
     "C:\\Users\\mindc1jun155\\.nuget\\packages\\runtime.native.system\\4.3.0\\runtime.native.system.4.3.0.nupkg.sha512",
     "C:\\Users\\mindc1jun155\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\mindc1jun155\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",

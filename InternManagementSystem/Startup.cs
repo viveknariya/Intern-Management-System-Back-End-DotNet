@@ -32,6 +32,8 @@ namespace InternManagementSystem
             services.AddScoped<IDesignation, DesignationLogic>();
             services.AddScoped<ILeave, LeaveLogic>();
 
+            services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
 
             services.AddCors(c => c.AddPolicy("allow origin", o => o.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 

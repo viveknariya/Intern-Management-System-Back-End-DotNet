@@ -63,34 +63,38 @@ namespace InternManagementSystem.BusinessLogic
         {
             try
             {
-                var temp = _context.InternRecord.Where(i => i.InternId == leave.InternId);
+                var temp = _context.InternRecord.FirstOrDefault(i => i.InternId == leave.InternId);
                 if(temp == null)
                 {
                     throw new UserNameNotFound("User Name Not Found");
                 }
-
-                var l = _context.Leave.FirstOrDefault(le => le.InternId == leave.InternId);
-                if (l == null)
-                {
-                    _context.Leave.Add(leave);
-                    _context.SaveChanges();
-
-                    return leave;
-                }
                 else
                 {
-                    if (l.LeaveDate == leave.LeaveDate)
-                    {
-                        throw new LeaveAlradyExists("Leave Already Exists");
-                    }
-                    else
+                    var l = _context.Leave.FirstOrDefault(le => le.InternId == leave.InternId);
+                    if (l == null)
                     {
                         _context.Leave.Add(leave);
                         _context.SaveChanges();
 
                         return leave;
                     }
+                    else
+                    {
+                        if (l.LeaveDate == leave.LeaveDate)
+                        {
+                            throw new LeaveAlradyExists("Leave Already Exists");
+                        }
+                        else
+                        {
+                            _context.Leave.Add(leave);
+                            _context.SaveChanges();
+
+                            return leave;
+                        }
+                    }
                 }
+
+                
             }
             catch (LeaveAlradyExists)
             {

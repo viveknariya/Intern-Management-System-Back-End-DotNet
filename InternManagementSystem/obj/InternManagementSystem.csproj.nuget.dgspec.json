@@ -44,6 +44,10 @@
               "target": "Package",
               "version": "[6.1.0, )"
             },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
             "Moq": {
               "target": "Package",
               "version": "[4.18.2, )"
@@ -111,6 +115,10 @@
             "Autofac.Extras.Moq": {
               "target": "Package",
               "version": "[6.1.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[3.1.0, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",

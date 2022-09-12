@@ -70,18 +70,20 @@ namespace InternManagementSystem.BusinessLogic
                 {
                     throw new UserNameNotFound("User Name Not Found");
                 }
-
-                var temp2 = _context.WorkingHour.FirstOrDefault(w => w.InternId == wh.InternId && w.Monthly == wh.Monthly);
-                if (temp2 == null)
-                {
-                    _context.WorkingHour.Add(wh);
-                    _context.SaveChanges();
-
-                    return wh;
-                }
                 else
                 {
-                    throw new WorkingDataAlreadyExists("Working Data Already Exists");
+                    var temp2 = _context.WorkingHour.FirstOrDefault(w => w.InternId == wh.InternId && w.Monthly == wh.Monthly);
+                    if (temp2 == null)
+                    {
+                        _context.WorkingHour.Add(wh);
+                        _context.SaveChanges();
+
+                        return wh;
+                    }
+                    else
+                    {
+                        throw new WorkingDataAlreadyExists("Working Data Already Exists");
+                    }
                 }
 
             }

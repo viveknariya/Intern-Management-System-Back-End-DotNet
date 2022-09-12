@@ -206,7 +206,7 @@ namespace TestCase
 
 
         [TestMethod]
-        public void LeavebyIntern(string id)
+        public void LeavebyIntern()
         {
             using (var mock = AutoMock.GetLoose())
             {
@@ -226,7 +226,7 @@ namespace TestCase
         }
 
         [TestMethod]
-        public void LeaveRecord(int id)
+        public void LeaveRecord()
         {
             using (var mock = AutoMock.GetLoose())
             {
